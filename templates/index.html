@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Emotion Detector</title>
+</head>
+<body>
+    <h2>Upload a Face Image</h2>
+
+    <form action="/predict" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <button type="submit">Predict Emotion</button>
+    </form>
+
+    {% if prediction %}
+        <h3>Emotion: {{ prediction }}</h3>
+        <img src="{{ image_path }}" alt="Uploaded Image" width="200">
+    {% endif %}
+</body>
+</html>
