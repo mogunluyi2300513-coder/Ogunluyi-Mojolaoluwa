@@ -2,7 +2,6 @@ from flask import Flask, render_template, request
 import tensorflow as tf
 import numpy as np
 from tensorflow.keras.preprocessing import image
-import cv2
 import os
 
 app = Flask(__name__)
@@ -30,6 +29,7 @@ def home():
 def predict():
     file = request.files['file']
     file_path = os.path.join('uploads', file.filename)
+    os.makedirs('uploads', exist_ok=True)  # Ensure uploads folder exists
     file.save(file_path)
 
     # Load image and prepare for model
@@ -45,5 +45,5 @@ def predict():
     return f"<h2>Predicted Emotion: {emotion_label}</h2>"
 
 if __name__ == '__main__':
-    os.makedirs('uploads', exist_ok=True)
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Use Render's port
+    app.run(host="0.0.0.0", port=port, debug=True)
